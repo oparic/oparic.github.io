@@ -1,0 +1,284 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Oparic – EIS</title>
+    <link>http://localhost:1313/en/docs/eis/</link>
+    <description>Recent content in EIS on Oparic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="http://localhost:1313/en/docs/eis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>EIS Extraction: CHI Instrument Data Preprocessing</title>
+      <link>http://localhost:1313/en/docs/eis/extract_chi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/en/docs/eis/extract_chi/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/workflows/EIS_extract_chi.png&#34; alt=&#34;EIS Extraction: CHI Instrument Data Preprocessing&#34;  loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;If you just received raw &lt;code&gt;.txt&lt;/code&gt; files exported from a CHI electrochemical workstation and aren&amp;rsquo;t sure where to start, this Workflow is the right first step.&lt;/p&gt;
+&lt;p&gt;This step automatically organizes raw EIS text into standardized tables (&lt;code&gt;*_eis.csv&lt;/code&gt;) and fills in key columns needed for subsequent plotting and fitting. You don&amp;rsquo;t need to manually rename columns or worry about minor differences between export formats.&lt;/p&gt;
+&lt;h2&gt;What You&amp;rsquo;ll Get&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;what-youll-get&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#what-youll-get&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;One &lt;code&gt;*_eis.csv&lt;/code&gt; file per sample&lt;/li&gt;
+&lt;li&gt;Unified fields: &lt;code&gt;freq_hz&lt;/code&gt;, &lt;code&gt;z_real_ohm&lt;/code&gt;, &lt;code&gt;z_imag_ohm&lt;/code&gt;, &lt;code&gt;z_mod_ohm&lt;/code&gt;, &lt;code&gt;phase_deg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Automatic removal of invalid data (e.g., non-positive frequencies, null values)&lt;/li&gt;
+&lt;li&gt;Automatic sorting by frequency from high to low, ready for direct Nyquist/Bode/DRT usage&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Steps&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Select input folder&lt;/strong&gt;: Select the directory containing the CHI &lt;code&gt;.txt&lt;/code&gt; raw EIS files.&lt;/li&gt;
+&lt;li&gt;The system automatically traverses &lt;code&gt;.txt&lt;/code&gt; files in the directory and processes them one by one.&lt;/li&gt;
+&lt;li&gt;Upon completion, an &lt;code&gt;xxx-eis-extract&lt;/code&gt; output folder is generated in the same directory.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If a file has an abnormal format during processing, the system will skip it with a warning without affecting the processing of other files.&lt;/p&gt;
+&lt;h2&gt;Data Recognition Logic (Brief)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;data-recognition-logic-brief&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#data-recognition-logic-brief&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The program first locates the &lt;code&gt;Freq/Hz&lt;/code&gt; data header, then automatically matches from common column name aliases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Frequency column: &lt;code&gt;Freq/Hz&lt;/code&gt; / &lt;code&gt;Frequency/Hz&lt;/code&gt; / &lt;code&gt;f/Hz&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Real part column: &lt;code&gt;Z&#39;/ohm&lt;/code&gt; / &lt;code&gt;Zreal/ohm&lt;/code&gt; / &lt;code&gt;Z&#39;/Ω&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Imaginary part column: &lt;code&gt;Z&amp;quot;/ohm&lt;/code&gt; / &lt;code&gt;Z&#39;&#39;/ohm&lt;/code&gt; / &lt;code&gt;Zimag/ohm&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And calculates accordingly:&lt;/p&gt;
+&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34; display=&#34;block&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;∣&lt;/mi&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;∣&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msqrt&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mrow&gt;&lt;mo mathvariant=&#34;normal&#34;&gt;′&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mrow&gt;&lt;mo mathvariant=&#34;normal&#34;&gt;′&lt;/mo&gt;&lt;mo mathvariant=&#34;normal&#34;&gt;′&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;/mrow&gt;&lt;/msqrt&gt;&lt;mo separator=&#34;true&#34;&gt;,&lt;/mo&gt;&lt;mspace width=&#34;1em&#34;/&gt;&lt;mi&gt;ϕ&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;arctan&lt;/mi&gt;&lt;mo&gt;⁡&lt;/mo&gt;&lt;mrow&gt;&lt;mo fence=&#34;true&#34;&gt;(&lt;/mo&gt;&lt;mfrac&gt;&lt;msup&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mrow&gt;&lt;mo mathvariant=&#34;normal&#34;&gt;′&lt;/mo&gt;&lt;mo mathvariant=&#34;normal&#34;&gt;′&lt;/mo&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;msup&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mo mathvariant=&#34;normal&#34; lspace=&#34;0em&#34; rspace=&#34;0em&#34;&gt;′&lt;/mo&gt;&lt;/msup&gt;&lt;/mfrac&gt;&lt;mo fence=&#34;true&#34;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;|Z| = \sqrt{Z&amp;#x27;^2 + Z&amp;#x27;&amp;#x27;^2}, \quad \phi = \arctan\left(\frac{Z&amp;#x27;&amp;#x27;}{Z&amp;#x27;}\right)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;∣&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;∣&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1.2567em;vertical-align:-0.1944em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord sqrt&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.0623em;&#34;&gt;&lt;span class=&#34;svg-align&#34; style=&#34;top:-3.2em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3.2em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34; style=&#34;padding-left:1em;&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.7401em;&#34;&gt;&lt;span style=&#34;top:-2.989em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;′2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.7401em;&#34;&gt;&lt;span style=&#34;top:-2.989em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;′′2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.0223em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3.2em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;hide-tail&#34; style=&#34;min-width:1.02em;height:1.28em;&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;400em&#34; height=&#34;1.28em&#34; viewBox=&#34;0 0 400000 1296&#34; preserveAspectRatio=&#34;xMinYMin slice&#34;&gt;&lt;path d=&#34;M263,681c0.7,0,18,39.7,52,119
+c34,79.3,68.167,158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120
+c340,-704.7,510.7,-1060.3,512,-1067
+l0 -0
+c4.7,-7.3,11,-11,19,-11
+H40000v40H1012.3
+s-271.3,567,-271.3,567c-38.7,80.7,-84,175,-136,283c-52,108,-89.167,185.3,-111.5,232
+c-22.3,46.7,-33.8,70.3,-34.5,71c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1
+s-109,-253,-109,-253c-72.7,-168,-109.3,-252,-110,-252c-10.7,8,-22,16.7,-34,26
+c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26s76,-59,76,-59s76,-60,76,-60z
+M1001 80h400000v40h-400000z&#34;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.1777em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mpunct&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:1em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.1667em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;ϕ&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.4em;vertical-align:-0.95em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mop&#34;&gt;arctan&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.1667em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;minner&#34;&gt;&lt;span class=&#34;mopen delimcenter&#34; style=&#34;top:0em;&#34;&gt;&lt;span class=&#34;delimsizing size3&#34;&gt;(&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.4289em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.6779em;&#34;&gt;&lt;span style=&#34;top:-2.989em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;′&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.7519em;&#34;&gt;&lt;span style=&#34;top:-3.063em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;′′&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.686em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose delimcenter&#34; style=&#34;top:0em;&#34;&gt;&lt;span class=&#34;delimsizing size3&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;p&gt;where the phase angle is output in degrees (&lt;code&gt;phase_deg&lt;/code&gt;).&lt;/p&gt;
+&lt;h2&gt;Output File Description&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;output-file-description&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#output-file-description&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Each &lt;code&gt;*_eis.csv&lt;/code&gt; contains at minimum:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;freq_hz&lt;/code&gt;: Frequency (Hz)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;z_real_ohm&lt;/code&gt;: Impedance real part (Ω)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;z_imag_ohm&lt;/code&gt;: Impedance imaginary part (Ω)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;z_mod_ohm&lt;/code&gt;: Impedance modulus (Ω)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;phase_deg&lt;/code&gt;: Phase angle (°)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Recommended Next Steps&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;recommended-next-steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#recommended-next-steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/en/docs/eis/plot/&#34;&gt;EIS Plotting: Nyquist and Bode Visualization&lt;/a&gt;: Quickly view Nyquist/Bode plot quality and trends&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/en/docs/eis/drt/&#34;&gt;EIS/DRT Analysis: Mapping Frequency-Domain Impedance to Relaxation Time Distribution&lt;/a&gt;: Further DRT relaxation time distribution analysis&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>In-Situ EIS Extraction: Donghua Instrument</title>
+      <link>http://localhost:1313/en/docs/eis/extract_in_situ_dh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/en/docs/eis/extract_in_situ_dh/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/workflows/EIS_extract_in_situ_dh.png&#34; alt=&#34;In-Situ EIS Extraction: Donghua Instrument&#34;  loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;This Workflow processes in-situ EIS records containing multiple &lt;code&gt;Freq(Hz),Zre(Ω),Zim(Ω)&lt;/code&gt; blocks (such as &lt;code&gt;原位EIS数据参考.txt&lt;/code&gt;), automatically splitting them into multiple standardized CSV segments. A new segment begins each time a new header is encountered, suitable for electrochemical degradation/trend analysis.&lt;/p&gt;
+&lt;h2&gt;Required Data Format&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;required-data-format&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#required-data-format&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Partial content:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Segment3(控制电位EIS)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Freq(Hz),Zre(Ω),Zim(Ω)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1E5,2.58944E0,-1.55539E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7.94328E4,2.71237E0,-1.8413E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Segment6(控制电位EIS)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Freq(Hz),Zre(Ω),Zim(Ω)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1E5,2.59732E0,-1.50046E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7.94328E4,2.72004E0,-1.76758E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+    aria-label=&#34;Copy code&#34;
+    data-copied-label=&#34;Copied!&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Ensure each EIS segment in the input text contains the following three column headers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Freq(Hz)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Zre(Ω)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Zim(Ω)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Separated by commas, with subsequent rows being numeric:&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code&#34;&gt;
+
+&lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Freq(Hz),Zre(Ω),Zim(Ω)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;1E5,2.58944E0,-1.55539E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;7.94328E4,2.71237E0,-1.8413E0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50&#34;
+    title=&#34;Copy code&#34;
+    aria-label=&#34;Copy code&#34;
+    data-copied-label=&#34;Copied!&#34;
+  &gt;
+    &lt;div class=&#34;hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Segment*&lt;/code&gt; labels are optional; the system does not depend on them.&lt;/li&gt;
+&lt;li&gt;A new header is detected whenever &lt;code&gt;Freq(Hz),Zre(Ω),Zim(Ω)&lt;/code&gt; is encountered.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Steps&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Select a single &lt;code&gt;.txt&lt;/code&gt; raw input file (single-file interaction).&lt;/li&gt;
+&lt;li&gt;Read the text and split into multiple data blocks by detected headers.&lt;/li&gt;
+&lt;li&gt;Convert each block to unified columns: &lt;code&gt;freq_hz,z_real_ohm,z_imag_ohm,z_mod_ohm,phase_deg&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Output directory: &lt;code&gt;&amp;lt;input_filename&amp;gt;_eis_csv&lt;/code&gt;, with internal filenames: &lt;code&gt;&amp;lt;input_filename&amp;gt;_eis_001.csv&lt;/code&gt;, &lt;code&gt;...&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Output Field Description&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;output-field-description&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#output-field-description&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;freq_hz&lt;/code&gt;: Frequency (Hz, float)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;z_real_ohm&lt;/code&gt;: Real part (Ω)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;z_imag_ohm&lt;/code&gt;: Imaginary part (Ω)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;z_mod_ohm&lt;/code&gt;: Modulus &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;∣&lt;/mi&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;∣&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msqrt&gt;&lt;mrow&gt;&lt;msubsup&gt;&lt;mi&gt;z&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;/mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msubsup&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msubsup&gt;&lt;mi&gt;z&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;/mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msubsup&gt;&lt;/mrow&gt;&lt;/msqrt&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;|Z| = \sqrt{z_{real}^2+z_{imag}^2}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;∣&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;∣&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1.84em;vertical-align:-0.6635em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord sqrt&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.1765em;&#34;&gt;&lt;span class=&#34;svg-align&#34; style=&#34;top:-3.8em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3.8em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34; style=&#34;padding-left:1em;&#34;&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.04398em;&#34;&gt;z&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.7959em;&#34;&gt;&lt;span style=&#34;top:-2.3987em;margin-left:-0.044em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mathnormal mtight&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;mord mathnormal mtight&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;mord mathnormal mtight&#34; style=&#34;margin-right:0.01968em;&#34;&gt;l&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.0448em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.3013em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.04398em;&#34;&gt;z&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.7959em;&#34;&gt;&lt;span style=&#34;top:-2.4231em;margin-left:-0.044em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mathnormal mtight&#34;&gt;ima&lt;/span&gt;&lt;span class=&#34;mord mathnormal mtight&#34; style=&#34;margin-right:0.03588em;&#34;&gt;g&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.0448em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.413em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.1365em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3.8em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;hide-tail&#34; style=&#34;min-width:1.02em;height:1.88em;&#34;&gt;&lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; width=&#34;400em&#34; height=&#34;1.88em&#34; viewBox=&#34;0 0 400000 1944&#34; preserveAspectRatio=&#34;xMinYMin slice&#34;&gt;&lt;path d=&#34;M983 90
+l0 -0
+c4,-6.7,10,-10,18,-10 H400000v40
+H1013.1s-83.4,268,-264.1,840c-180.7,572,-277,876.3,-289,913c-4.7,4.7,-12.7,7,-24,7
+s-12,0,-12,0c-1.3,-3.3,-3.7,-11.7,-7,-25c-35.3,-125.3,-106.7,-373.3,-214,-744
+c-10,12,-21,25,-33,39s-32,39,-32,39c-6,-5.3,-15,-14,-27,-26s25,-30,25,-30
+c26.7,-32.7,52,-63,76,-91s52,-60,52,-60s208,722,208,722
+c56,-175.3,126.3,-397.3,211,-666c84.7,-268.7,153.8,-488.2,207.5,-658.5
+c53.7,-170.3,84.5,-266.8,92.5,-289.5z
+M1001 80h400000v40h-400000z&#34;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.6635em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;phase_deg&lt;/code&gt;: Phase angle (°)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Notes&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;notes&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#notes&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Rows with frequency &amp;lt;= 0 and invalid numeric rows are filtered out.&lt;/li&gt;
+&lt;li&gt;If a segment has no usable data, it will report an error and be skipped.&lt;/li&gt;
+&lt;li&gt;The output columns are fully compatible with &lt;a href=&#34;http://localhost:1313/en/docs/eis/extract_chi/&#34;&gt;EIS Extraction: CHI Instrument Data Preprocessing&lt;/a&gt;, and can be directly used for subsequent &lt;a href=&#34;http://localhost:1313/en/docs/eis/plot/&#34;&gt;EIS Plotting: Nyquist and Bode Visualization&lt;/a&gt; and &lt;a href=&#34;http://localhost:1313/en/docs/eis/drt/&#34;&gt;EIS/DRT Analysis: Mapping Frequency-Domain Impedance to Relaxation Time Distribution&lt;/a&gt; analysis.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>EIS Plotting: Nyquist and Bode Visualization</title>
+      <link>http://localhost:1313/en/docs/eis/plot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/en/docs/eis/plot/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/workflows/EIS_plot.png&#34; alt=&#34;EIS Plotting: Nyquist and Bode Visualization&#34;  loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;After completing EIS data extraction, the first thing to do is usually &amp;ldquo;look at the plots to assess data quality.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;This Workflow batch-plots the extracted &lt;code&gt;*_eis.csv&lt;/code&gt; files as Nyquist and Bode diagrams, helping you quickly identify sample differences, outliers, and test stability. It also supports exporting Origin projects for subsequent formatting and publication-quality figure preparation.&lt;/p&gt;
+&lt;h2&gt;Prerequisites&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;prerequisites&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#prerequisites&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;First run &lt;a href=&#34;http://localhost:1313/en/docs/eis/extract_chi/&#34;&gt;EIS Extraction: CHI Instrument Data Preprocessing&lt;/a&gt; or &lt;a href=&#34;http://localhost:1313/en/docs/eis/extract_in_situ_dh/&#34;&gt;In-Situ EIS Extraction: Donghua Instrument&lt;/a&gt; to ensure the directory contains standardized &lt;code&gt;*_eis.csv&lt;/code&gt; files.&lt;/p&gt;
+&lt;h2&gt;Steps&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Select input directory&lt;/strong&gt;: Select the output directory from &lt;a href=&#34;http://localhost:1313/en/docs/eis/extract_chi/&#34;&gt;EIS Extraction: CHI Instrument Data Preprocessing&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;The system automatically identifies all &lt;code&gt;*_eis.csv&lt;/code&gt; files and batch-generates plots.&lt;/li&gt;
+&lt;li&gt;The output directory is the input directory itself; files can be viewed directly after processing.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Generated Plots&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;generated-plots&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#generated-plots&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;1) Nyquist Plot&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;1-nyquist-plot&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#1-nyquist-plot&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;X-axis: &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mo mathvariant=&#34;normal&#34; lspace=&#34;0em&#34; rspace=&#34;0em&#34;&gt;′&lt;/mo&gt;&lt;/msup&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;Z&amp;#x27;&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.7519em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.7519em;&#34;&gt;&lt;span style=&#34;top:-3.063em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;′&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Y-axis: &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mrow&gt;&lt;mo mathvariant=&#34;normal&#34;&gt;′&lt;/mo&gt;&lt;mo mathvariant=&#34;normal&#34;&gt;′&lt;/mo&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;-Z&amp;#x27;&amp;#x27;&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.8352em;vertical-align:-0.0833em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;−&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.7519em;&#34;&gt;&lt;span style=&#34;top:-3.063em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;′′&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Used for observing charge transfer impedance, diffusion behavior, and overall morphology before equivalent circuit fitting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;2) Bode Plot&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;2-bode-plot&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#2-bode-plot&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Modulus plot: &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;∣&lt;/mi&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;∣&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;|Z|&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;∣&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;∣&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; vs. frequency (logarithmic axis)&lt;/li&gt;
+&lt;li&gt;Phase plot: Phase vs. frequency (logarithmic axis)&lt;/li&gt;
+&lt;li&gt;Convenient for comparing response mechanisms across different frequency ranges&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Output&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;output&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#output&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Each sample produces:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;*_nyquist_matplotlib.png&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;*_bode_matplotlib.png&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;*_eis_plots.opju&lt;/code&gt; (single-sample Origin project)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Additionally:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;eis_plots_merged.opju&lt;/code&gt; (multi-sample merged Origin project)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Recommended Next Steps&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;recommended-next-steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#recommended-next-steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/en/docs/eis/drt/&#34;&gt;EIS/DRT Analysis: Mapping Frequency-Domain Impedance to Relaxation Time Distribution&lt;/a&gt;: Further DRT analysis based on the same batch of &lt;code&gt;*_eis.csv&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>EIS/DRT Analysis: Mapping Frequency-Domain Impedance to Relaxation Time Distribution</title>
+      <link>http://localhost:1313/en/docs/eis/drt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/en/docs/eis/drt/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/workflows/EIS_drt.png&#34; alt=&#34;EIS/DRT Analysis: Mapping Frequency-Domain Impedance to Relaxation Time Distribution&#34;  loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;ve already looked at Nyquist/Bode plots but still want to understand &amp;ldquo;which kinetic process is actually dominating the response,&amp;rdquo; this Workflow is designed for that question.&lt;/p&gt;
+&lt;p&gt;It performs DRT (Distribution of Relaxation Times) analysis on the extracted EIS data, mapping frequency-domain impedance information to a time constant distribution, helping you more intuitively distinguish different processes (such as interfacial charge transfer, diffusion-related processes, etc.).&lt;/p&gt;
+&lt;h2&gt;Prerequisites&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;prerequisites&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#prerequisites&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;First run &lt;a href=&#34;http://localhost:1313/en/docs/eis/extract_chi/&#34;&gt;EIS Extraction: CHI Instrument Data Preprocessing&lt;/a&gt; or &lt;a href=&#34;http://localhost:1313/en/docs/eis/extract_in_situ_dh/&#34;&gt;In-Situ EIS Extraction: Donghua Instrument&lt;/a&gt; to ensure the input is a standardized EIS CSV (containing &lt;code&gt;freq_hz&lt;/code&gt;, &lt;code&gt;z_real_ohm&lt;/code&gt;, &lt;code&gt;z_imag_ohm&lt;/code&gt;).&lt;/p&gt;
+&lt;h2&gt;Steps&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;steps&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#steps&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;You can choose one of two options:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Select a directory (batch process all &lt;code&gt;.csv&lt;/code&gt; files in the directory)&lt;/li&gt;
+&lt;li&gt;Or select a single &lt;code&gt;.csv&lt;/code&gt; file (process only one sample)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The program automatically creates a &lt;code&gt;drt_output&lt;/code&gt; directory and outputs results separately for each sample.&lt;/p&gt;
+&lt;h2&gt;Analysis and Fitting Results&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;analysis-and-fitting-results&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#analysis-and-fitting-results&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Each sample produces the following data files:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fit_data.csv&lt;/code&gt;: Experimental impedance, DRT-reconstructed impedance, and residuals&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;drt_data.csv&lt;/code&gt;: &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;τ&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\tau&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.4306em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.1132em;&#34;&gt;τ&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; and &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;γ&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;(&lt;/mo&gt;&lt;mi&gt;τ&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\gamma(\tau)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.05556em;&#34;&gt;γ&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.1132em;&#34;&gt;τ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; distribution&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;summary.json&lt;/code&gt;: Regularization parameters and solution summary (e.g., &lt;code&gt;lambda_value&lt;/code&gt;, &lt;code&gt;epsilon&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And the following plots:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;nyquist_fit.png&lt;/code&gt;: Experimental vs. DRT-fitted Nyquist comparison&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;drt_tau.png&lt;/code&gt;: &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;γ&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\gamma&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.625em;vertical-align:-0.1944em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.05556em;&#34;&gt;γ&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;–&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;τ&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\tau&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.4306em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.1132em;&#34;&gt;τ&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; distribution plot (logarithmic x-axis)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;residuals.png&lt;/code&gt;: Real/imaginary part residual plot&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;*_drt_plots.opju&lt;/code&gt;: Origin project (also containing Nyquist, DRT, and residual plots)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Principle (Brief)&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;principle-brief&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#principle-brief&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;DRT represents impedance as a superposition of processes with different time constants. The core idea can be written as:&lt;/p&gt;
+&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34; display=&#34;block&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;(&lt;/mo&gt;&lt;mi&gt;ω&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;R&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;∞&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mo&gt;∫&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mi&gt;γ&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;(&lt;/mo&gt;&lt;mi&gt;τ&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;mi&gt;ω&lt;/mi&gt;&lt;mi&gt;τ&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;mtext&gt; &lt;/mtext&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;ln&lt;/mi&gt;&lt;mo&gt;⁡&lt;/mo&gt;&lt;mi&gt;τ&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;Z(\omega)=R_\infty + \int \frac{\gamma(\tau)}{1+j\omega\tau} \, d\ln\tau&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07153em;&#34;&gt;Z&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.03588em;&#34;&gt;ω&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.8333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.00773em;&#34;&gt;R&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.1514em;&#34;&gt;&lt;span style=&#34;top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;∞&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:2.3074em;vertical-align:-0.8804em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mop op-symbol large-op&#34; style=&#34;margin-right:0.44445em;position:relative;top:-0.0011em;&#34;&gt;∫&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.1667em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mopen nulldelimiter&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mfrac&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:1.427em;&#34;&gt;&lt;span style=&#34;top:-2.314em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.03588em;&#34;&gt;jω&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.1132em;&#34;&gt;τ&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.23em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;frac-line&#34; style=&#34;border-bottom-width:0.04em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;top:-3.677em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:3em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.05556em;&#34;&gt;γ&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.1132em;&#34;&gt;τ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.8804em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose nulldelimiter&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.1667em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;d&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.1667em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mop&#34;&gt;ln&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.1667em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.1132em;&#34;&gt;τ&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;p&gt;where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The peak positions of &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;γ&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;(&lt;/mo&gt;&lt;mi&gt;τ&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\gamma(\tau)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.05556em;&#34;&gt;γ&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.1132em;&#34;&gt;τ&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; reflect the characteristic time scales of the corresponding processes&lt;/li&gt;
+&lt;li&gt;Peak area/height is related to the contribution strength of that process&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This makes it easier to resolve &amp;ldquo;multiple mechanisms superimposed&amp;rdquo; compared to just looking at Nyquist semicircles.&lt;/p&gt;
+&lt;h2&gt;FAQ&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;faq&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#faq&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Why are some samples missing results?&lt;/strong&gt; Common reasons include missing input columns or data containing invalid values; the program will skip and report the specific error.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Practical Tips&lt;span class=&#34;hx:absolute hx:-mt-20&#34; id=&#34;practical-tips&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#practical-tips&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;If this is your first time doing DRT, it&amp;rsquo;s recommended to first use &lt;a href=&#34;http://localhost:1313/en/docs/eis/plot/&#34;&gt;EIS Plotting: Nyquist and Bode Visualization&lt;/a&gt; to quickly check whether curves are smooth and whether there are obvious outliers, then proceed to this step. This usually yields more stable and more interpretable results.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
