@@ -1,5 +1,5 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Oparic – EIS</title><link>https://oparic.com/docs/eis/</link><description>Recent content in EIS on Oparic</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><atom:link href="https://oparic.com/docs/eis/index.xml" rel="self" type="application/rss+xml"/><item><title>EIS 提取: 辰华仪器</title><link>https://oparic.com/docs/eis/extract_chi/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/docs/eis/extract_chi/</guid><description>
-&lt;p&gt;&lt;img src="https://oparic.com/images/workflows/EIS_extract_chi.png" alt="EIS 提取: 辰华仪器" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://oparic.com/images/workflows/eis_extract_chi.png" alt="EIS 提取: 辰华仪器" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;如果你刚拿到辰华电化学工作站导出的 &lt;code&gt;.txt&lt;/code&gt; 原始文件，不确定该怎么开始，先用这个 Workflow 就对了。&lt;/p&gt;
 &lt;p&gt;这个步骤会把原始 EIS 文本自动整理成标准化表格（&lt;code&gt;*_eis.csv&lt;/code&gt;），并补齐后续绘图与拟合会用到的关键列。你不需要手动改列名，也不用担心不同导出格式带来的小差异。&lt;/p&gt;
 &lt;h2&gt;你会得到什么&lt;span class="hx:absolute hx:-mt-20" id="你会得到什么"&gt;&lt;/span&gt;
@@ -49,7 +49,7 @@ M1001 80h400000v40h-400000z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span
 &lt;li&gt;&lt;a href="https://oparic.com/docs/eis/plot/"&gt;EIS 绘图：Nyquist 和 Bode&lt;/a&gt;：快速查看 Nyquist/Bode 图形质量与趋势&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://oparic.com/docs/eis/drt/"&gt;EIS/DRT 分析&lt;/a&gt;：进一步做 DRT 弛豫时间分布分析&lt;/li&gt;
 &lt;/ul&gt;</description></item><item><title>EIS 提取: 东华原位 EIS</title><link>https://oparic.com/docs/eis/extract_in_situ_dh/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/docs/eis/extract_in_situ_dh/</guid><description>
-&lt;p&gt;&lt;img src="https://oparic.com/images/workflows/EIS_extract_in_situ_dh.png" alt="EIS 提取: 东华原位 EIS" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://oparic.com/images/workflows/eis_extract_in_situ_dh.png" alt="EIS 提取: 东华原位 EIS" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;这个 Workflow 用于处理包含多个 &lt;code&gt;Freq(Hz),Zre(Ω),Zim(Ω)&lt;/code&gt; 块的原位 EIS 记录（如 &lt;code&gt;原位EIS数据参考.txt&lt;/code&gt;），自动切分成多个标准化 CSV 片段。每次遇到新的表头，就开始一个新的段落，适合电化学衰减/趋势分析。&lt;/p&gt;
 &lt;h2&gt;你需要的数据格式&lt;span class="hx:absolute hx:-mt-20" id="你需要的数据格式"&gt;&lt;/span&gt;
 &lt;a href="#%e4%bd%a0%e9%9c%80%e8%a6%81%e7%9a%84%e6%95%b0%e6%8d%ae%e6%a0%bc%e5%bc%8f" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;部分内容：&lt;/p&gt;
@@ -134,7 +134,7 @@ M1001 80h400000v40h-400000z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span
 &lt;li&gt;若某个段落没有可用数据，该段会报错并跳过。&lt;/li&gt;
 &lt;li&gt;该与 &lt;a href="https://oparic.com/docs/eis/extract_chi/"&gt;EIS 提取: 辰华仪器&lt;/a&gt; 的输出列完全兼容，可直接用于后续 &lt;a href="https://oparic.com/docs/eis/plot/"&gt;EIS 绘图：Nyquist 和 Bode&lt;/a&gt; &lt;a href="https://oparic.com/docs/eis/drt/"&gt;EIS/DRT 分析&lt;/a&gt; 分析。&lt;/li&gt;
 &lt;/ul&gt;</description></item><item><title>EIS 绘图：Nyquist 和 Bode</title><link>https://oparic.com/docs/eis/plot/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/docs/eis/plot/</guid><description>
-&lt;p&gt;&lt;img src="https://oparic.com/images/workflows/EIS_plot.png" alt="EIS 绘图：Nyquist 和 Bode" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://oparic.com/images/workflows/eis_plot.png" alt="EIS 绘图：Nyquist 和 Bode" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;当你完成 EIS 数据提取后，第一件事通常就是“先看图，判断数据状态”。&lt;/p&gt;
 &lt;p&gt;这个 Workflow 会把提取后的 &lt;code&gt;*_eis.csv&lt;/code&gt; 批量绘制为 Nyquist 与 Bode 图，帮你快速确认样品差异、异常点和测试稳定性；同时支持导出 Origin 工程，方便你后续美化和出图。&lt;/p&gt;
 &lt;h2&gt;前置条件&lt;span class="hx:absolute hx:-mt-20" id="前置条件"&gt;&lt;/span&gt;
@@ -173,7 +173,7 @@ M1001 80h400000v40h-400000z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span
 &lt;a href="#%e4%b8%8b%e4%b8%80%e6%ad%a5%e5%bb%ba%e8%ae%ae" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://oparic.com/docs/eis/drt/"&gt;EIS/DRT 分析&lt;/a&gt;：基于同一批 &lt;code&gt;*_eis.csv&lt;/code&gt; 进一步进行 DRT 分析&lt;/li&gt;
 &lt;/ul&gt;</description></item><item><title>EIS/DRT 分析</title><link>https://oparic.com/docs/eis/drt/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/docs/eis/drt/</guid><description>
-&lt;p&gt;&lt;img src="https://oparic.com/images/workflows/EIS_drt.png" alt="EIS/DRT 分析" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://oparic.com/images/workflows/eis_drt.png" alt="EIS/DRT 分析" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;如果你已经看过 Nyquist/Bode，但还想搞明白“到底是哪一段动力学在主导响应”，这个 Workflow 就是为这个问题准备的。&lt;/p&gt;
 &lt;p&gt;它会对提取后的 EIS 数据执行 DRT（Distribution of Relaxation Times）分析，把频域阻抗信息映射到时间常数分布上，帮助你更直观地区分不同过程（如界面电荷转移、扩散相关过程等）。&lt;/p&gt;
 &lt;h2&gt;前置条件&lt;span class="hx:absolute hx:-mt-20" id="前置条件"&gt;&lt;/span&gt;
