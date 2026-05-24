@@ -174,6 +174,102 @@ M1001 80h400000v40h-400000z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span
 &lt;a href="#%e5%90%8e%e7%bb%ad%e6%8e%a8%e8%8d%90" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://oparic.com/docs/eis/plot/"&gt;EIS 绘图：Nyquist 和 Bode&lt;/a&gt;：快速查看 Nyquist/Bode 图形质量与趋势&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://oparic.com/docs/eis/drt/"&gt;EIS/DRT 分析&lt;/a&gt;：进一步做 DRT 弛豫时间分布分析&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Quickstart</title><link>https://oparic.com/en/quickstart/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/en/quickstart/</guid><description>
+&lt;blockquote&gt;
+&lt;p&gt;How Oparic works: &lt;strong&gt;first &amp;ldquo;extract&amp;rdquo;, then &amp;ldquo;analyze / plot&amp;rdquo;&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;The core model: two steps&lt;span class="hx:absolute hx:-mt-20" id="the-core-model-two-steps"&gt;&lt;/span&gt;
+&lt;a href="#the-core-model-two-steps" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div role="img" aria-label="图表"&gt;
+&lt;pre class="mermaid hx:mt-6"&gt;
+flowchart LR
+A[&amp;#34;Raw instrument data&amp;lt;br/&amp;gt;(.txt files exported from the instrument, etc.)&amp;#34;] --&amp;gt;|input| B[&amp;#34;Step 1: extraction card&amp;lt;br/&amp;gt;chosen by instrument format&amp;lt;br/&amp;gt;e.g. CV Extraction: CHI&amp;#34;]
+B --&amp;gt;|output folder&amp;lt;br/&amp;gt;normalized .xlsx| C[&amp;#34;Step 2: analysis / plotting card&amp;lt;br/&amp;gt;takes the extraction output&amp;lt;br /&amp;gt;folder/files as input&amp;lt;br/&amp;gt;e.g. Plot the Last Complete Cycle&amp;#34;]
+C --&amp;gt; D[&amp;#34;Origin / Excel / images&amp;#34;]
+&lt;/pre&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Step 1 (extract)&lt;/strong&gt;: pick an &amp;ldquo;XX Extraction&amp;rdquo; card that matches &lt;strong&gt;your instrument&lt;/strong&gt; (for example, &amp;ldquo;CV Extraction: CHI&amp;rdquo; or &amp;ldquo;CV Extraction: DIGISIM&amp;rdquo;). The input is the folder of raw files exported from the instrument; the output is normalized &lt;code&gt;.xlsx&lt;/code&gt; files written to a sibling folder named like &lt;code&gt;&amp;lt;input&amp;gt;-cv-extract&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Step 2 (analyze / plot)&lt;/strong&gt;: pick an analysis or plotting card (for example, &amp;ldquo;Coulombic Efficiency&amp;rdquo;, &amp;ldquo;Plot the Last Complete Cycle&amp;rdquo;, or &amp;ldquo;b-value Analysis&amp;rdquo;). Its input is &lt;strong&gt;the output folder produced by Step 1&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Each card lists &amp;ldquo;Prerequisites&amp;rdquo; — which extraction card must run first — and &amp;ldquo;Related Analyses&amp;rdquo; — recommended follow-up cards you can click through to.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Preparation&lt;span class="hx:absolute hx:-mt-20" id="preparation"&gt;&lt;/span&gt;
+&lt;a href="#preparation" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Install and launch Oparic (Windows).&lt;/li&gt;
+&lt;li&gt;Register and sign in.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Origin (optional, but recommended)&lt;/strong&gt;: Windows only, requires &lt;strong&gt;Origin ≥ 2021&lt;/strong&gt;. Once installed, the status bar will show Origin as ready. If Origin is missing or its version is too old, the cards still run — they just will not auto-generate Origin plots.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;A full run-through (CV as an example)&lt;span class="hx:absolute hx:-mt-20" id="a-full-run-through-cv-as-an-example"&gt;&lt;/span&gt;
+&lt;a href="#a-full-run-through-cv-as-an-example" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Step 1 · Extract&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Gallery → &lt;code&gt;CV&lt;/code&gt; → &amp;ldquo;CV Extraction: CHI&amp;rdquo; (or whichever extraction card matches your instrument).&lt;/li&gt;
+&lt;li&gt;In the folder picker, select the &lt;strong&gt;folder containing the raw &lt;code&gt;.txt&lt;/code&gt; files&lt;/strong&gt; (not a single file).&lt;/li&gt;
+&lt;li&gt;You will get &lt;code&gt;&amp;lt;input-folder&amp;gt;-cv-extract&lt;/code&gt;, containing normalized &lt;code&gt;.xlsx&lt;/code&gt; files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Step 2 · Analyze / Plot&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Back to the gallery → pick a CV analysis or plotting card (for example, &amp;ldquo;Plot the Last Complete Cycle&amp;rdquo;).&lt;/li&gt;
+&lt;li&gt;In the folder picker, select the &lt;strong&gt;&lt;code&gt;-cv-extract&lt;/code&gt; output folder produced by Step 1&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;The figure is generated automatically. If Origin ≥ 2021 is ready, Oparic also creates worksheets, plots in Origin, and saves an &lt;code&gt;.opju&lt;/code&gt; file to the output folder, where you can keep refining in Origin.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;FAQ&lt;span class="hx:absolute hx:-mt-20" id="faq"&gt;&lt;/span&gt;
+&lt;a href="#faq" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Origin did not launch?&lt;/strong&gt; The status bar will explain why. Excel files and preview images should still be generated; if the issue persists, contact technical support.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Will it overwrite my existing plots?&lt;/strong&gt; Yes. If Origin already contains earlier plots, &lt;strong&gt;Oparic will overwrite them&lt;/strong&gt;. Save your work before launching — a warning dialog will appear in this case.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;No txt files were processed successfully&amp;rdquo;&lt;/strong&gt;: make sure you selected a &lt;strong&gt;folder&lt;/strong&gt;, and that the folder contains raw files in the &lt;strong&gt;matching instrument format&lt;/strong&gt; (picking the wrong extraction card causes a format mismatch).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Wrong folder selected in Step 2&lt;/strong&gt;: analysis and plotting cards read the &lt;strong&gt;&lt;code&gt;.xlsx&lt;/code&gt; / &lt;code&gt;.csv&lt;/code&gt; files produced by extraction&lt;/strong&gt;. Do not point them at the raw data folder — those formats cannot be parsed directly.&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>快速上手</title><link>https://oparic.com/quickstart/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/quickstart/</guid><description>
+&lt;blockquote&gt;
+&lt;p&gt;Oparic 的工作方式：&lt;strong&gt;先「提取」，再「分析/出图」&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;核心模型：两步走&lt;span class="hx:absolute hx:-mt-20" id="核心模型两步走"&gt;&lt;/span&gt;
+&lt;a href="#%e6%a0%b8%e5%bf%83%e6%a8%a1%e5%9e%8b%e4%b8%a4%e6%ad%a5%e8%b5%b0" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;div role="img" aria-label="图表"&gt;
+&lt;pre class="mermaid hx:mt-6"&gt;
+flowchart LR
+A[&amp;#34;原始仪器数据&amp;lt;br/&amp;gt;（仪器导出的 .txt 等）&amp;#34;] --&amp;gt;|输入| B[&amp;#34;第一步：提取卡片&amp;lt;br/&amp;gt;按仪器格式选择&amp;lt;br/&amp;gt;例：CV 提取: 辰华仪器&amp;#34;]
+B --&amp;gt;|输出文件夹&amp;lt;br/&amp;gt;规范化的 .xlsx| C[&amp;#34;第二步：分析 / 绘图卡片&amp;lt;br/&amp;gt;以提取结果目录/文件&amp;lt;br /&amp;gt;作为输入&amp;lt;br/&amp;gt;例：绘制最后一圈&amp;#34;]
+C --&amp;gt; D[&amp;#34;Origin / Excel / 图片&amp;#34;]
+&lt;/pre&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第一步（提取）&lt;/strong&gt;：按你的&lt;strong&gt;仪器型号&lt;/strong&gt;选一张「××提取」卡片（如「CV 提取: 辰华仪器」「CV 提取: DIGISIM」），输入是仪器导出的原始数据文件夹，输出是规范化的 &lt;code&gt;.xlsx&lt;/code&gt;（落到 &lt;code&gt;&amp;lt;输入&amp;gt;-cv-extract&lt;/code&gt; 这种同级目录）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二步（分析/绘图）&lt;/strong&gt;：选一张分析或绘图卡片（如「计算库伦效率」「绘制最后一圈」「b 值分析」），它的输入就是&lt;strong&gt;第一步生成的那个输出文件夹&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;卡片上的“需要先完成”写明了它需要哪张提取卡片先跑过，“相关分析” 是跑完之后推荐的下一张卡片，可点击切换。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;准备&lt;span class="hx:absolute hx:-mt-20" id="准备"&gt;&lt;/span&gt;
+&lt;a href="#%e5%87%86%e5%a4%87" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;安装并启动 Oparic（Windows）。&lt;/li&gt;
+&lt;li&gt;注册/登录。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Origin（可选，但推荐）&lt;/strong&gt;：仅 Windows，要求 &lt;strong&gt;Origin ≥ 2021&lt;/strong&gt;。装好后状态栏会显示 Origin 已就绪；没装或版本不够也能跑，只是不会自动出 Origin 图。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;跑通一遍（以 CV 为例）&lt;span class="hx:absolute hx:-mt-20" id="跑通一遍以-cv-为例"&gt;&lt;/span&gt;
+&lt;a href="#%e8%b7%91%e9%80%9a%e4%b8%80%e9%81%8d%e4%bb%a5-cv-%e4%b8%ba%e4%be%8b" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;第一步 · 提取&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;画廊 → &lt;code&gt;CV&lt;/code&gt; → 「CV 提取: 辰华仪器」（或对应你仪器的提取卡片）。&lt;/li&gt;
+&lt;li&gt;在文件夹选择器里选中&lt;strong&gt;装有 &lt;code&gt;.txt&lt;/code&gt; 原始文件的文件夹&lt;/strong&gt;（不是单个文件）。&lt;/li&gt;
+&lt;li&gt;自动得到 &lt;code&gt;&amp;lt;输入文件夹&amp;gt;-cv-extract&lt;/code&gt;，里面是规范化的 &lt;code&gt;.xlsx&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二步 · 分析/绘图&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;返回画廊 → 选一张 CV 分析/绘图卡片（如「绘制最后一圈」）。&lt;/li&gt;
+&lt;li&gt;在文件夹选择器里选&lt;strong&gt;第一步那个 &lt;code&gt;-cv-extract&lt;/code&gt; 输出文件夹&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;自动绘图；若 Origin ≥ 2021 已就绪，会同步在 Origin 中建表、出图，并保存 &lt;code&gt;.opju&lt;/code&gt; 到输出文件夹，可在 Origin 内继续精修。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;常见问题&lt;span class="hx:absolute hx:-mt-20" id="常见问题"&gt;&lt;/span&gt;
+&lt;a href="#%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;没调起 Origin？&lt;/strong&gt; 状态栏会标明原因，Excel 与预览图应该会正常生成，还不能解决的话可以联系我们技术支持！&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;会覆盖我已有的绘图？&lt;/strong&gt; 是的。如果此前在 Origin 已经有过绘图&lt;strong&gt;软件会覆盖过去的绘图&lt;/strong&gt;，请务必注意在启动前保存工作！我们会弹出提示警告这种状况。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;「没有成功处理任何 txt」&lt;/strong&gt;：确认选的是&lt;strong&gt;文件夹&lt;/strong&gt;，且其中是&lt;strong&gt;对应仪器格式&lt;/strong&gt;的原始文件（选错提取卡片会导致格式不匹配）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二步选错文件夹&lt;/strong&gt;：分析/绘图卡片读的是&lt;strong&gt;提取后的 &lt;code&gt;.xlsx/.csv&lt;/code&gt;&lt;/strong&gt;，不要再选原始数据文件夹，那些格式无法被直接识别。&lt;/li&gt;
 &lt;/ul&gt;</description></item><item><title>CV 提取: DIGISIM</title><link>https://oparic.com/docs/cv/extract_digsim/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/docs/cv/extract_digsim/</guid><description>
 &lt;p&gt;本 Workflow 用于处理 DIGSIM 软件导出的原始文本格式（.txt）CV 数据。通过自动识别测试参数，将连续的测试曲线拆分为独立的循环，并根据扫描方向（正向/负向）对数据进行精确对齐和配对，最终导出为结构化的 Excel 表格。&lt;/p&gt;
 &lt;p&gt;本 Workflow 是所有后续 CV 分析流程的数据基础。&lt;/p&gt;
@@ -577,7 +673,53 @@ M1001 80h400000v40h-400000z"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span
 &lt;a href="#%e5%90%8e%e7%bb%ad%e5%88%86%e6%9e%90" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://oparic.com/docs/cv/cdl/"&gt;CV/Cdl&lt;/a&gt;：基于不同扫速的中点电流差进行 &lt;span class="katex"&gt;&lt;span class="katex-mathml"&gt;&lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;C&lt;/mi&gt;&lt;mtext&gt;dl&lt;/mtext&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding="application/x-tex"&gt;C_{\text{dl}}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8333em;vertical-align:-0.15em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;&lt;span class="mord mathnormal" style="margin-right:0.07153em;"&gt;C&lt;/span&gt;&lt;span class="msupsub"&gt;&lt;span class="vlist-t vlist-t2"&gt;&lt;span class="vlist-r"&gt;&lt;span class="vlist" style="height:0.3361em;"&gt;&lt;span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"&gt;&lt;span class="pstrut" style="height:2.7em;"&gt;&lt;/span&gt;&lt;span class="sizing reset-size6 size3 mtight"&gt;&lt;span class="mord mtight"&gt;&lt;span class="mord text mtight"&gt;&lt;span class="mord mtight"&gt;dl&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="vlist-s"&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class="vlist-r"&gt;&lt;span class="vlist" style="height:0.15em;"&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; 线性拟合，进而计算电化学活性面积（ECSA）&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://oparic.com/docs/cv/coulombic_efficiency/"&gt;CV: 计算库伦效率&lt;/a&gt;：评估电极反应的可逆性&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>CV/Cdl</title><link>https://oparic.com/docs/cv/cdl/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/docs/cv/cdl/</guid><description>
+&lt;/ul&gt;</description></item><item><title>EIS/DRT 热力图</title><link>https://oparic.com/docs/eis/drt_heatmap/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/docs/eis/drt_heatmap/</guid><description>
+&lt;p&gt;&lt;img src="https://oparic.com/images/workflows/eis_drt_heatmap.png" alt="EIS/DRT 热力图" loading="lazy" /&gt;&lt;/p&gt;
+&lt;p&gt;当你做了一组原位 EIS（不同电位/不同时间点）或一系列样品（不同条件、不同浓度）的 DRT 分析后，把所有样品的 γ(τ) 折线挤在一张图上往往很难读。这个 Workflow 把它们拼成一张 τ–样品 维度的热力图，用颜色直观展示某个弛豫过程在不同条件下的强度演化。&lt;/p&gt;
+&lt;h2&gt;前置条件&lt;span class="hx:absolute hx:-mt-20" id="前置条件"&gt;&lt;/span&gt;
+&lt;a href="#%e5%89%8d%e7%bd%ae%e6%9d%a1%e4%bb%b6" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;可以二选一作为输入：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://oparic.com/docs/eis/drt/"&gt;EIS/DRT 分析&lt;/a&gt; 输出的 &lt;code&gt;drt_output/&lt;/code&gt; 目录（已计算好 DRT 的样品集合）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://oparic.com/docs/eis/extract_chi/"&gt;EIS 提取: 辰华仪器&lt;/a&gt; 或 &lt;a href="https://oparic.com/docs/eis/extract_in_situ_dh/"&gt;EIS 提取: 东华原位 EIS&lt;/a&gt; 输出的 &lt;code&gt;*_eis.csv&lt;/code&gt; 目录（程序会先自动跑一遍 DRT 再绘图）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;至少需要 2 个样品。&lt;/p&gt;
+&lt;h2&gt;操作步骤&lt;span class="hx:absolute hx:-mt-20" id="操作步骤"&gt;&lt;/span&gt;
+&lt;a href="#%e6%93%8d%e4%bd%9c%e6%ad%a5%e9%aa%a4" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;只需选择一个目录。程序会自动：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;检测目录类型（&lt;code&gt;drt_output/&lt;/code&gt; 还是 &lt;code&gt;*_eis.csv&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;必要时调用 DRT 求解，并把每个样品的 &lt;code&gt;drt_data.csv&lt;/code&gt; 缓存到 &lt;code&gt;drt_heatmap/drt_output/&amp;lt;sample&amp;gt;/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;对所有样品取 τ 范围交集，建立 200 点的对数公共网格，对 γ(τ) 在 log-τ 上做线性插值&lt;/li&gt;
+&lt;li&gt;对样品名做自然排序&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Y 轴启发式说明：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若所有样品名末尾都能抽出整数，且这些整数两两不同（如 &lt;code&gt;in_situ_001&lt;/code&gt;、&lt;code&gt;in_situ_002&lt;/code&gt;&amp;hellip;），则 Y 轴模式为 &lt;code&gt;index&lt;/code&gt;，用这些整数作为 Y 数值，标签为 &lt;code&gt;Sample Index&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;否则回退为 &lt;code&gt;ordinal&lt;/code&gt; 模式，Y 数值为 &lt;code&gt;1..N&lt;/code&gt;，Y 刻度标签使用样品名（在 Origin 中尝试通过 LabTalk 注入；若失败则回退为数值刻度并打印提示）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;终端会打印当前使用的模式，便于排查。&lt;/p&gt;
+&lt;h2&gt;输出&lt;span class="hx:absolute hx:-mt-20" id="输出"&gt;&lt;/span&gt;
+&lt;a href="#%e8%be%93%e5%87%ba" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;drt_heatmap.png&lt;/code&gt;：matplotlib 版热力图，X 轴为 τ（log 坐标），Y 轴按启发式确定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;drt_heatmap.opju&lt;/code&gt;：Origin 工程，&lt;strong&gt;这是后续可二次编辑的主要产物&lt;/strong&gt;。X 轴存的是 &lt;code&gt;log₁₀τ&lt;/code&gt; 数值（轴标签会写成 &lt;code&gt;log₁₀τ &lt;/code&gt;），这样便于在 Origin 里继续编辑而不会和&amp;quot;看似 log 实际线性分布&amp;quot;的格子错位&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;drt_heatmap_clipped.png&lt;/code&gt; / &lt;code&gt;drt_heatmap_clipped.opju&lt;/code&gt;：&lt;strong&gt;截峰版热力图&lt;/strong&gt;。DRT 结果常存在一个远高于其他特征的主峰，会把色标拉得很大、淹没所有次要弛豫过程。这两个文件会把色标上限钳制在&amp;quot;次强峰高度的 120%&amp;quot;（用 &lt;code&gt;scipy.signal.find_peaks&lt;/code&gt; 在每个样品的 γ(τ) 上寻峰，取所有样品里最高的次强峰，再乘 1.2），高于该阈值的格子统一用色标顶端的颜色显示。两份输出和原始 &lt;code&gt;drt_heatmap.*&lt;/code&gt; 同时给出，可以互相对照。如果所有样品都只有 1 个峰，则会跳过截峰版本并打印提示&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;drt_heatmap_matrix.csv&lt;/code&gt;：插值后的 γ 矩阵（&lt;strong&gt;未截峰&lt;/strong&gt;），第一列样品名，第二列 Y 数值，其余列以 τ 为表头&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;samples_meta.json&lt;/code&gt;：记录 &lt;code&gt;y_mode&lt;/code&gt;、&lt;code&gt;y_label&lt;/code&gt;、&lt;code&gt;input_kind&lt;/code&gt; 与样品-Y 数值映射&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;eis_csvs&lt;/code&gt; 输入模式还会在 &lt;code&gt;drt_heatmap/drt_output/&amp;lt;sample&amp;gt;/drt_data.csv&lt;/code&gt; 落盘 DRT 中间结果，方便复用。&lt;/p&gt;
+&lt;h2&gt;原理（简要）&lt;span class="hx:absolute hx:-mt-20" id="原理简要"&gt;&lt;/span&gt;
+&lt;a href="#%e5%8e%9f%e7%90%86%e7%ae%80%e8%a6%81" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;将每个样品的 γ(τ) 排布到统一的对数 τ 网格上，得到矩阵 &lt;span class="katex"&gt;&lt;span class="katex-mathml"&gt;&lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;γ&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo separator="true"&gt;,&lt;/mo&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding="application/x-tex"&gt;\gamma_{i,j}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;&lt;span class="mord mathnormal" style="margin-right:0.05556em;"&gt;γ&lt;/span&gt;&lt;span class="msupsub"&gt;&lt;span class="vlist-t vlist-t2"&gt;&lt;span class="vlist-r"&gt;&lt;span class="vlist" style="height:0.3117em;"&gt;&lt;span style="top:-2.55em;margin-left:-0.0556em;margin-right:0.05em;"&gt;&lt;span class="pstrut" style="height:2.7em;"&gt;&lt;/span&gt;&lt;span class="sizing reset-size6 size3 mtight"&gt;&lt;span class="mord mtight"&gt;&lt;span class="mord mathnormal mtight"&gt;i&lt;/span&gt;&lt;span class="mpunct mtight"&gt;,&lt;/span&gt;&lt;span class="mord mathnormal mtight" style="margin-right:0.05724em;"&gt;j&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="vlist-s"&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class="vlist-r"&gt;&lt;span class="vlist" style="height:0.2861em;"&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;，其中 &lt;span class="katex"&gt;&lt;span class="katex-mathml"&gt;&lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding="application/x-tex"&gt;i&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.6595em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal"&gt;i&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; 标记样品（Y 维度），&lt;span class="katex"&gt;&lt;span class="katex-mathml"&gt;&lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding="application/x-tex"&gt;j&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.854em;vertical-align:-0.1944em;"&gt;&lt;/span&gt;&lt;span class="mord mathnormal" style="margin-right:0.05724em;"&gt;j&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; 标记 τ（X 维度）。热力图把 &lt;span class="katex"&gt;&lt;span class="katex-mathml"&gt;&lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;γ&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mo separator="true"&gt;,&lt;/mo&gt;&lt;mi&gt;j&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding="application/x-tex"&gt;\gamma_{i,j}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;&lt;span class="mord mathnormal" style="margin-right:0.05556em;"&gt;γ&lt;/span&gt;&lt;span class="msupsub"&gt;&lt;span class="vlist-t vlist-t2"&gt;&lt;span class="vlist-r"&gt;&lt;span class="vlist" style="height:0.3117em;"&gt;&lt;span style="top:-2.55em;margin-left:-0.0556em;margin-right:0.05em;"&gt;&lt;span class="pstrut" style="height:2.7em;"&gt;&lt;/span&gt;&lt;span class="sizing reset-size6 size3 mtight"&gt;&lt;span class="mord mtight"&gt;&lt;span class="mord mathnormal mtight"&gt;i&lt;/span&gt;&lt;span class="mpunct mtight"&gt;,&lt;/span&gt;&lt;span class="mord mathnormal mtight" style="margin-right:0.05724em;"&gt;j&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="vlist-s"&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class="vlist-r"&gt;&lt;span class="vlist" style="height:0.2861em;"&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt; 用颜色表示，可以一眼看出：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;某个弛豫过程对应的峰随条件（电位/时间）如何沿 τ 移动&lt;/li&gt;
+&lt;li&gt;不同样品间峰强度的相对变化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;常见问题&lt;span class="hx:absolute hx:-mt-20" id="常见问题"&gt;&lt;/span&gt;
+&lt;a href="#%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;为什么提示 &amp;ldquo;tau 范围无重叠&amp;rdquo;？&lt;/strong&gt; 不同样品的频率范围如果完全错开，公共 τ 网格无法构建。请检查输入数据的 &lt;code&gt;freq_hz&lt;/code&gt; 列。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;样品顺序怎么定？&lt;/strong&gt; 自然排序：&lt;code&gt;sample_001 &amp;lt; sample_002 &amp;lt; sample_010&lt;/code&gt;。如果你不希望按名称排序，请提前重命名。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Origin 自定义 Y 刻度失败怎么办？&lt;/strong&gt; 程序会捕获异常并回退为数值刻度，opju 仍可正常打开，只是 Y 轴显示 &lt;code&gt;1, 2, 3, ...&lt;/code&gt; 而非样品名。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;实用建议&lt;span class="hx:absolute hx:-mt-20" id="实用建议"&gt;&lt;/span&gt;
+&lt;a href="#%e5%ae%9e%e7%94%a8%e5%bb%ba%e8%ae%ae" class="subheading-anchor" aria-label="此章节的永久链接"&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;如果你做的是原位 EIS（按时间或电位采样），建议样品名带上严格递增的整数序号（如 &lt;code&gt;_001&lt;/code&gt;、&lt;code&gt;_002&lt;/code&gt;），这样 Y 轴会自动用这些序号做坐标，便于和其他原位曲线对照。&lt;/p&gt;</description></item><item><title>CV/Cdl</title><link>https://oparic.com/docs/cv/cdl/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://oparic.com/docs/cv/cdl/</guid><description>
 &lt;p&gt;&lt;img src="https://oparic.com/images/workflows/cv_cdl.png" alt="CV/Cdl" loading="lazy" /&gt;&lt;/p&gt;
 &lt;p&gt;本 Workflow 基于 &lt;a href="https://oparic.com/docs/cv/extract_chi/"&gt;CV 提取: 辰华仪器&lt;/a&gt; 或 &lt;a href="https://oparic.com/docs/cv/extract_digsim/"&gt;CV 提取: DIGISIM&lt;/a&gt; 的输出数据，利用不同扫速下中点电位处阳极与阴极电流的差值，通过线性拟合获取双电层电容 &lt;span class="katex"&gt;&lt;span class="katex-mathml"&gt;&lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;C&lt;/mi&gt;&lt;mtext&gt;dl&lt;/mtext&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding="application/x-tex"&gt;C_{\text{dl}}&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class="katex-html" aria-hidden="true"&gt;&lt;span class="base"&gt;&lt;span class="strut" style="height:0.8333em;vertical-align:-0.15em;"&gt;&lt;/span&gt;&lt;span class="mord"&gt;&lt;span class="mord mathnormal" style="margin-right:0.07153em;"&gt;C&lt;/span&gt;&lt;span class="msupsub"&gt;&lt;span class="vlist-t vlist-t2"&gt;&lt;span class="vlist-r"&gt;&lt;span class="vlist" style="height:0.3361em;"&gt;&lt;span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"&gt;&lt;span class="pstrut" style="height:2.7em;"&gt;&lt;/span&gt;&lt;span class="sizing reset-size6 size3 mtight"&gt;&lt;span class="mord mtight"&gt;&lt;span class="mord text mtight"&gt;&lt;span class="mord mtight"&gt;dl&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="vlist-s"&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class="vlist-r"&gt;&lt;span class="vlist" style="height:0.15em;"&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;，可进一步用于计算电化学活性面积（Electrochemically Active Surface Area, ECSA）。&lt;/p&gt;
 &lt;h2&gt;前置条件&lt;span class="hx:absolute hx:-mt-20" id="前置条件"&gt;&lt;/span&gt;

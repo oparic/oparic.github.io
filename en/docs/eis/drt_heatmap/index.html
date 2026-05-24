@@ -6,31 +6,31 @@
 <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
 <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-<title>EIS Extraction: CHI Instruments Data Preprocessing – Oparic</title>
-  <meta name="description" content="从辰华仪器的 txt 目录中提取 EIS 数据" /><link rel="canonical" href="http://localhost:1313/en/docs/eis/extract_chi/" itemprop="url" />
+<title>EIS/DRT Heatmap: Combining Multiple Samples&#39; Relaxation Time Distributions into a 2D View – Oparic</title>
+  <meta name="description" content="将多组样品的 DRT 结果合成 τ–样品 维度的 contour 热力图（Origin &#43; matplotlib）" /><link rel="canonical" href="http://localhost:1313/en/docs/eis/drt_heatmap/" itemprop="url" />
 
-<meta property="og:title" content="EIS Extraction: CHI Instruments Data Preprocessing">
+<meta property="og:title" content="EIS/DRT Heatmap: Combining Multiple Samples&#39; Relaxation Time Distributions into a 2D View">
 <meta
   property="og:description"
   content="
-    从辰华仪器的 txt 目录中提取 EIS 数据
+    将多组样品的 DRT 结果合成 τ–样品 维度的 contour 热力图（Origin &#43; matplotlib）
   ">
 <meta
   property="og:type"
   content="
     article
   ">
-<meta property="og:url" content="http://localhost:1313/en/docs/eis/extract_chi/"><meta property="article:section" content="docs">
+<meta property="og:url" content="http://localhost:1313/en/docs/eis/drt_heatmap/"><meta property="article:section" content="docs">
 
 
 
 
-  <meta itemprop="name" content="EIS Extraction: CHI Instruments Data Preprocessing">
-  <meta itemprop="description" content="从辰华仪器的 txt 目录中提取 EIS 数据">
-  <meta itemprop="wordCount" content="292">
+  <meta itemprop="name" content="EIS/DRT Heatmap: Combining Multiple Samples&#39; Relaxation Time Distributions into a 2D View">
+  <meta itemprop="description" content="将多组样品的 DRT 结果合成 τ–样品 维度的 contour 热力图（Origin &#43; matplotlib）">
+  <meta itemprop="wordCount" content="694">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="EIS Extraction: CHI Instruments Data Preprocessing">
-  <meta name="twitter:description" content="从辰华仪器的 txt 目录中提取 EIS 数据">
+  <meta name="twitter:title" content="EIS/DRT Heatmap: Combining Multiple Samples&#39; Relaxation Time Distributions into a 2D View">
+  <meta name="twitter:description" content="将多组样品的 DRT 结果合成 τ–样品 维度的 contour 热力图（Origin &#43; matplotlib）">
 <link href="/css/compiled/main.css" rel="stylesheet" />
     <link href="/css/variables.css" rel="stylesheet" />
     <link href="/css/custom.css" rel="stylesheet" />
@@ -233,48 +233,15 @@
       <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="Toggle section" aria-expanded="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
   </div>
               <div class="hextra-sidebar-children hx:ltr:pr-0 hx:rtl:pl-0 hx:overflow-hidden">
-        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="true">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
-      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
       href="/en/docs/eis/extract_chi/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">EIS Extraction: CHI Instruments Data Preprocessing</span>
     </a>
   </div>
-  
-    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
-              <a
-                href="#what-you-get"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >What You Get</a>
-            </li>
-          <li>
-              <a
-                href="#procedure"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Procedure</a>
-            </li>
-          <li>
-              <a
-                href="#data-recognition-logic-brief"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Data Recognition Logic (Brief)</a>
-            </li>
-          <li>
-              <a
-                href="#output-file-description"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Output File Description</a>
-            </li>
-          <li>
-              <a
-                href="#subsequent-analysis"
-                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
-              >Subsequent Analysis</a>
-            </li>
-          </ul>
-  
               
             </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
@@ -306,15 +273,54 @@
     </a>
   </div>
               
-            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+            </li><li class="hx:flex hx:flex-col open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="true">
     <a
-      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
       href="/en/docs/eis/drt_heatmap/"
       
     >
       <span class="hx:min-w-0 [word-break:break-word]">EIS/DRT Heatmap: Combining Multiple Samples&#39; Relaxation Time Distributions into a 2D View</span>
     </a>
   </div>
+  
+    <ul class='hx:flex hx:flex-col hx:gap-1 hx:relative hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:dark:before:bg-neutral-800 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:pr-3 hx:rtl:before:right-0 hx:ltr:ml-3 hx:rtl:mr-3'><li>
+              <a
+                href="#prerequisites"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Prerequisites</a>
+            </li>
+          <li>
+              <a
+                href="#procedure"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Procedure</a>
+            </li>
+          <li>
+              <a
+                href="#output"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Output</a>
+            </li>
+          <li>
+              <a
+                href="#principle-brief"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Principle (Brief)</a>
+            </li>
+          <li>
+              <a
+                href="#faq"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >FAQ</a>
+            </li>
+          <li>
+              <a
+                href="#practical-tips"
+                class="hx:flex hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [word-break:break-word] hx:cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:contrast-more:border hx:gap-2 hx:before:opacity-25 hx:before:content-['#'] hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:text-gray-900 hx:contrast-more:dark:text-gray-50 hx:contrast-more:border-transparent hx:contrast-more:hover:border-gray-900 hx:contrast-more:dark:hover:border-gray-50"
+              >Practical Tips</a>
+            </li>
+          </ul>
+  
               
             </li></ul>
       </div>
@@ -406,9 +412,9 @@
     </a>
       <button type="button" class="hextra-sidebar-collapsible-button hx:absolute hx:top-1/2 hx:-translate-y-1/2 hx:ltr:right-2 hx:rtl:left-2 hx:shrink-0 hx:cursor-pointer hx:p-0 hx:text-gray-500 hx:dark:text-neutral-400 hx:group-hover:text-gray-900 hx:dark:group-hover:text-gray-50 hx:group-data-[active=true]:text-primary-800 hx:group-data-[active=true]:dark:text-primary-600 hx:hextra-focus-visible-inset" aria-label="Toggle section" aria-expanded="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false" class="hx:h-[18px] hx:min-w-[18px] hx:rounded-xs hx:p-0.5 hx:hover:bg-gray-800/5 hx:dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx:origin-center hx:transition-transform hx:rtl:-rotate-180"></path></svg></button>
   </div><div class="hextra-sidebar-children hx:ltr:pr-0 hx:rtl:pl-0 hx:overflow-hidden">
-        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="true">
+        <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
     <a
-      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
       href="/en/docs/eis/extract_chi/"
       
     >
@@ -446,9 +452,9 @@
     </a>
   </div>
               
-            </li><li class="hx:flex hx:flex-col "><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="false">
+            </li><li class="hx:flex hx:flex-col open"><div class="hextra-sidebar-item hx:group hx:relative hx:flex hx:items-center" data-active="true">
     <a
-      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hx:text-gray-500 hx:hover:bg-gray-100 hx:hover:text-gray-900 hx:contrast-more:border hx:contrast-more:border-transparent hx:contrast-more:text-gray-900 hx:contrast-more:hover:border-gray-900 hx:dark:text-neutral-400 hx:dark:hover:bg-primary-100/5 hx:dark:hover:text-gray-50 hx:contrast-more:dark:text-gray-50 hx:contrast-more:dark:hover:border-gray-50"
+      class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:grow hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] hx:hextra-focus-visible-inset hextra-sidebar-active-item hx:bg-primary-100 hx:font-semibold hx:text-primary-800 hx:contrast-more:border hx:contrast-more:border-primary-500 hx:dark:bg-primary-400/10 hx:dark:text-primary-600 hx:contrast-more:dark:border-primary-500"
       href="/en/docs/eis/drt_heatmap/"
       
     >
@@ -486,7 +492,7 @@
     background: oklch(0.35 0.02 255); color: oklch(0.92 0.01 255);
   }
 </style>
-<div class="oparic-lang-toggle" role="radiogroup" aria-label="Language"><a href="/docs/eis/extract_chi/" role="radio" aria-checked="false" class="">中文</a><a href="/en/docs/eis/extract_chi/" role="radio" aria-checked="true" class="active">EN</a></div><div class="hx:flex hx:justify-items-start hx:group" data-theme="light">
+<div class="oparic-lang-toggle" role="radiogroup" aria-label="Language"><a href="/docs/eis/drt_heatmap/" role="radio" aria-checked="false" class="">中文</a><a href="/en/docs/eis/drt_heatmap/" role="radio" aria-checked="true" class="active">EN</a></div><div class="hx:flex hx:justify-items-start hx:group" data-theme="light">
   <button
     title="Change theme"
     data-state="closed"
@@ -554,7 +560,7 @@
 <nav class="hextra-toc hx:order-last hx:hidden hx:w-64 hx:shrink-0 hx:xl:block hx:print:hidden hx:px-4" aria-label="Table of contents">
     <div class="hextra-scrollbar hx:sticky hx:top-16 hx:overflow-y-auto hx:pr-4 hx:pt-6 hx:text-sm [hyphens:auto] hx:max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] hx:ltr:-mr-4 hx:rtl:-ml-4"><p class="hx:mb-4 hx:font-semibold hx:tracking-tight">On this page</p><ul>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#what-you-get">What You Get
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#prerequisites">Prerequisites
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
@@ -562,15 +568,19 @@
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#data-recognition-logic-brief">Data Recognition Logic (Brief)
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#output">Output
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#output-file-description">Output File Description
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#principle-brief">Principle (Brief)
         </a>
       </li>
       <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
-        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#subsequent-analysis">Subsequent Analysis
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#faq">FAQ
+        </a>
+      </li>
+      <li class="hx:my-2 hx:scroll-my-6 hx:scroll-py-6">
+        <a class="hx:font-medium hx:inline-block hx:rounded-sm hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300 hx:contrast-more:text-gray-900 hx:contrast-more:underline hx:contrast-more:dark:text-gray-50 hx:w-full hx:wrap-break-word hx:hextra-focus-visible-inset" href="#practical-tips">Practical Tips
         </a>
       </li></ul>
       <div class="hx:mt-8 hx:border-t hx:bg-white hx:pt-8 hx:shadow-[0_-12px_16px_white] hx:dark:bg-dark hx:dark:shadow-[0_-12px_16px_#111] hx:sticky hx:bottom-0 hx:flex hx:flex-col hx:items-start hx:gap-2 hx:pb-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-t hx:contrast-more:border-neutral-400 hx:contrast-more:shadow-none hx:contrast-more:dark:border-neutral-400">
@@ -593,73 +603,69 @@
         </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         <div class="hx:whitespace-nowrap hx:transition-colors hx:min-w-[24px] hx:overflow-hidden hx:text-ellipsis hx:hover:text-gray-900 hx:dark:hover:text-gray-100">
           <a href="/en/docs/eis/" class="hx:inline-block hx:rounded-sm hx:hextra-focus-visible-inset">EIS</a>
-        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">EIS Extraction: CHI Instruments Data Preprocessing</div>
+        </div><svg class="hx:w-3.5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="hx:whitespace-nowrap hx:transition-colors hx:font-medium hx:text-gray-700 hx:contrast-more:font-bold hx:contrast-more:text-current hx:dark:text-gray-100 hx:contrast-more:dark:text-current">EIS/DRT Heatmap: Combining Multiple Samples&#39; Relaxation Time Distributions into a 2D View</div>
   </div>
 
         <div class="content">
           
           <div class="hx:flex hx:flex-col hx:sm:flex-row hx:items-start hx:sm:items-center hx:sm:justify-between hx:gap-4 hx:mb-4">
-            <h1 class="hx:mb-0">EIS Extraction: CHI Instruments Data Preprocessing</h1>
+            <h1 class="hx:mb-0">EIS/DRT Heatmap: Combining Multiple Samples&#39; Relaxation Time Distributions into a 2D View</h1>
             
           </div>
           
-          <p><img src="/images/workflows/eis_extract_chi.png" alt="EIS Extraction: CHI Instruments Data Preprocessing"  loading="lazy" /></p>
-<p>If you have just received raw <code>.txt</code> files exported from a CHI electrochemical workstation and are not sure where to begin, this workflow is the right starting point.</p>
-<p>It automatically converts the raw EIS text into standardized tables (<code>*_eis.csv</code>) and fills in the key columns needed for subsequent plotting and fitting. You do not need to rename columns manually or worry about minor differences between export formats.</p>
-<h2>What You Get<span class="hx:absolute hx:-mt-20" id="what-you-get"></span>
-    <a href="#what-you-get" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li>One <code>*_eis.csv</code> file per sample</li>
-<li>Unified fields: <code>freq_hz</code>, <code>z_real_ohm</code>, <code>z_imag_ohm</code>, <code>z_mod_ohm</code>, <code>phase_deg</code></li>
-<li>Invalid data automatically removed (e.g., non-positive frequencies, empty values)</li>
-<li>Automatically sorted by frequency from high to low, ready for direct use in Nyquist/Bode/DRT workflows</li>
-</ul>
-<h2>Procedure<span class="hx:absolute hx:-mt-20" id="procedure"></span>
-    <a href="#procedure" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ol>
-<li><strong>Select the input folder</strong>: choose the directory containing the raw CHI <code>.txt</code> EIS files.</li>
-<li>The system traverses all <code>.txt</code> files in the directory and processes them one by one.</li>
-<li>On completion, an <code>xxx-eis-extract</code> output folder is created alongside the input directory.</li>
+          <p><img src="/images/workflows/eis_drt_heatmap.png" alt="EIS/DRT Heatmap: Combining Multiple Samples’ Relaxation Time Distributions into a 2D View"  loading="lazy" /></p>
+<p>After running DRT analysis on a set of in-situ EIS measurements (across different potentials or time points) or a series of samples (different conditions, different concentrations), overlaying all the γ(τ) curves on a single line plot quickly becomes unreadable. This workflow combines them into a single τ-versus-sample heatmap, using color to visually convey how the intensity of a given relaxation process evolves across conditions.</p>
+<h2>Prerequisites<span class="hx:absolute hx:-mt-20" id="prerequisites"></span>
+    <a href="#prerequisites" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Choose one of two input types:</p>
+<ol>
+<li>A <code>drt_output/</code> directory produced by <code>[EIS/DRT Analysis: Mapping Frequency-Domain Impedance to a Distribution of Relaxation Times](/docs/eis/drt)</code> (a collection of samples with DRT already computed)</li>
+<li>A directory of <code>*_eis.csv</code> files produced by <code>[EIS Extraction: CHI Instruments Data Preprocessing](/docs/eis/extract_chi)</code> or <code>[In-Situ EIS Extraction: DH Instruments](/docs/eis/extract_in_situ_dh)</code> (the program automatically runs DRT first, then plots)</li>
 </ol>
-<p>If a file has an unexpected format, the system skips it with a warning and continues processing the remaining files.</p>
-<h2>Data Recognition Logic (Brief)<span class="hx:absolute hx:-mt-20" id="data-recognition-logic-brief"></span>
-    <a href="#data-recognition-logic-brief" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>The program first locates the <code>Freq/Hz</code> header row, then automatically matches columns from common aliases:</p>
+<p>At least 2 samples are required.</p>
+<h2>Procedure<span class="hx:absolute hx:-mt-20" id="procedure"></span>
+    <a href="#procedure" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Select a single directory. The program automatically:</p>
+<ol>
+<li>Detects the directory layout (<code>drt_output/</code> versus <code>*_eis.csv</code>)</li>
+<li>Invokes the DRT solver if needed, caching each sample&rsquo;s <code>drt_data.csv</code> to <code>drt_heatmap/drt_output/&lt;sample&gt;/</code></li>
+<li>Takes the intersection of all samples&rsquo; τ ranges, builds a 200-point logarithmic common grid, and linearly interpolates γ(τ) on the log-τ axis</li>
+<li>Naturally sorts the sample names</li>
+</ol>
+<p>Y-axis heuristic:</p>
 <ul>
-<li>Frequency column: <code>Freq/Hz</code> / <code>Frequency/Hz</code> / <code>f/Hz</code></li>
-<li>Real-part column: <code>Z'/ohm</code> / <code>Zreal/ohm</code> / <code>Z'/Ω</code></li>
-<li>Imaginary-part column: <code>Z&quot;/ohm</code> / <code>Z''/ohm</code> / <code>Zimag/ohm</code></li>
+<li>If every sample name ends with an integer that can be extracted, and those integers are all distinct (e.g., <code>in_situ_001</code>, <code>in_situ_002</code>, &hellip;), the Y-axis mode is <code>index</code>. Those integers become the Y values, and the axis is labeled <code>Sample Index</code>.</li>
+<li>Otherwise the workflow falls back to <code>ordinal</code> mode: Y values are <code>1..N</code>, and the Y-axis ticks use the sample names (attempted in Origin via LabTalk; on failure, the axis falls back to numeric ticks with a console warning).</li>
 </ul>
-<p>From these, it computes:</p>
-<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">∣</mi><mi>Z</mi><mi mathvariant="normal">∣</mi><mo>=</mo><msqrt><mrow><msup><mi>Z</mi><mrow><mo mathvariant="normal">′</mo><mn>2</mn></mrow></msup><mo>+</mo><msup><mi>Z</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo><mn>2</mn></mrow></msup></mrow></msqrt><mo separator="true">,</mo><mspace width="1em"/><mi>ϕ</mi><mo>=</mo><mi>arctan</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><mfrac><msup><mi>Z</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><msup><mi>Z</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mfrac><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">|Z| = \sqrt{Z&#x27;^2 + Z&#x27;&#x27;^2}, \quad \phi = \arctan\left(\frac{Z&#x27;&#x27;}{Z&#x27;}\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2567em;vertical-align:-0.1944em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0623em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′′2</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.0223em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.28em" viewBox="0 0 400000 1296" preserveAspectRatio="xMinYMin slice"><path d="M263,681c0.7,0,18,39.7,52,119
-c34,79.3,68.167,158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120
-c340,-704.7,510.7,-1060.3,512,-1067
-l0 -0
-c4.7,-7.3,11,-11,19,-11
-H40000v40H1012.3
-s-271.3,567,-271.3,567c-38.7,80.7,-84,175,-136,283c-52,108,-89.167,185.3,-111.5,232
-c-22.3,46.7,-33.8,70.3,-34.5,71c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1
-s-109,-253,-109,-253c-72.7,-168,-109.3,-252,-110,-252c-10.7,8,-22,16.7,-34,26
-c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26s76,-59,76,-59s76,-60,76,-60z
-M1001 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1777em;"><span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">ϕ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.4em;vertical-align:-0.95em;"></span><span class="mop">arctan</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4289em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6779em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7519em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′′</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span></span></span></span></span><p>The phase angle is output in degrees (<code>phase_deg</code>).</p>
-<h2>Output File Description<span class="hx:absolute hx:-mt-20" id="output-file-description"></span>
-    <a href="#output-file-description" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Each <code>*_eis.csv</code> contains at least:</p>
+<p>The console prints the active mode for easy debugging.</p>
+<h2>Output<span class="hx:absolute hx:-mt-20" id="output"></span>
+    <a href="#output" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
+<li><code>drt_heatmap.png</code>: matplotlib heatmap, with τ on the x-axis (log scale) and the y-axis determined by the heuristic</li>
+<li><code>drt_heatmap.opju</code>: Origin project — <strong>the primary deliverable for subsequent editing</strong>. The x-axis stores <code>log₁₀τ</code> values (the title reads <code>log₁₀τ</code>); this avoids the visual mismatch you would get if you laid linearly-spaced matrix cells under a log axis</li>
+<li><code>drt_heatmap_clipped.png</code> / <code>drt_heatmap_clipped.opju</code>: <strong>clipped heatmap variant</strong>. DRT results often contain a single dominant peak that is much higher than every other feature, which stretches the color scale and washes out all secondary relaxation processes. These two files cap the color-scale upper bound at 120% of the second-tallest peak height (computed with <code>scipy.signal.find_peaks</code> on each sample&rsquo;s γ(τ); the program takes the largest &ldquo;second peak&rdquo; across all samples, then multiplies by 1.2). Cells above the threshold are rendered with the top color of the scale. Both variants are produced alongside the originals so you can compare them side-by-side. If every sample has only one peak, the clipped variant is skipped and a console message is printed.</li>
+<li><code>drt_heatmap_matrix.csv</code>: the interpolated γ matrix (<strong>not</strong> clipped), with the first column holding sample names, the second column the Y values, and the remaining columns headed by τ</li>
+<li><code>samples_meta.json</code>: records <code>y_mode</code>, <code>y_label</code>, <code>input_kind</code>, and the sample-to-Y-value mapping</li>
+</ul>
+<p>In <code>eis_csvs</code> input mode, intermediate DRT results are also written to <code>drt_heatmap/drt_output/&lt;sample&gt;/drt_data.csv</code> for reuse.</p>
+<h2>Principle (Brief)<span class="hx:absolute hx:-mt-20" id="principle-brief"></span>
+    <a href="#principle-brief" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Each sample&rsquo;s γ(τ) is interpolated onto a unified logarithmic τ grid, producing a matrix <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>γ</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\gamma_{i,j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0556em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>, where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> indexes the sample (y dimension) and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span> indexes τ (x dimension). The heatmap encodes <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>γ</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\gamma_{i,j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0556em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> as color, making the following readable at a glance:</p>
 <ul>
-<li><code>freq_hz</code>: frequency (Hz)</li>
-<li><code>z_real_ohm</code>: real part of impedance (Ω)</li>
-<li><code>z_imag_ohm</code>: imaginary part of impedance (Ω)</li>
-<li><code>z_mod_ohm</code>: impedance modulus (Ω)</li>
-<li><code>phase_deg</code>: phase angle (°)</li>
+<li>How the peak corresponding to a given relaxation process shifts along τ as conditions (potential/time) change</li>
+<li>Relative changes in peak intensity across samples</li>
 </ul>
-<h2>Subsequent Analysis<span class="hx:absolute hx:-mt-20" id="subsequent-analysis"></span>
-    <a href="#subsequent-analysis" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li><a href="/en/docs/eis/plot/">EIS Plotting: Nyquist and Bode Visualization</a>: quickly review Nyquist/Bode plot quality and trends</li>
-<li><a href="/en/docs/eis/drt/">EIS/DRT Analysis: Mapping Frequency-Domain Impedance to a Distribution of Relaxation Times</a>: perform DRT (Distribution of Relaxation Times) analysis</li>
+<h2>FAQ<span class="hx:absolute hx:-mt-20" id="faq"></span>
+    <a href="#faq" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
+<li><strong>Why does it report &ldquo;tau range no overlap&rdquo;?</strong> If the frequency ranges of different samples do not overlap at all, the common τ grid cannot be constructed. Check the <code>freq_hz</code> column of the input data.</li>
+<li><strong>How is the sample order determined?</strong> Natural sort: <code>sample_001 &lt; sample_002 &lt; sample_010</code>. If you do not want name-based ordering, rename the files beforehand.</li>
+<li><strong>What if Origin custom Y ticks fail?</strong> The program catches the exception and falls back to numeric ticks. The <code>.opju</code> still opens correctly; only the Y-axis labels switch from sample names to <code>1, 2, 3, ...</code>.</li>
 </ul>
+<h2>Practical Tips<span class="hx:absolute hx:-mt-20" id="practical-tips"></span>
+    <a href="#practical-tips" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>For in-situ EIS data (sampled by time or potential), embed strictly increasing integer indices in the sample names (e.g., <code>_001</code>, <code>_002</code>). The y-axis will then automatically use those indices as coordinates, making it easy to align with other in-situ curves.</p>
 
         </div>
         <div class="hx:mt-16"></div><div class="hx:mb-8 hx:flex hx:items-center hx:border-t hx:pt-8 hx:border-gray-200 hx:dark:border-neutral-800 hx:contrast-more:border-neutral-400 hx:dark:contrast-more:border-neutral-400 hx:print:hidden"><a
-        href="/en/docs/eis/extract_in_situ_dh/"
-        title="In-Situ EIS Extraction: DH Instruments"
-        class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:ml-auto hx:ltr:pl-4 hx:ltr:text-right hx:rtl:mr-auto hx:rtl:pr-4 hx:rtl:text-left"
-      >In-Situ EIS Extraction: DH Instruments<svg class="hx:inline hx:h-5 hx:shrink-0 hx:rtl:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a></div>
+        href="/en/docs/eis/drt/"
+        title="EIS/DRT Analysis: Mapping Frequency-Domain Impedance to a Distribution of Relaxation Times"
+        class="hx:flex hx:max-w-[50%] hx:items-center hx:gap-1 hx:py-4 hx:text-base hx:font-medium hx:text-gray-600 hx:transition-colors [word-break:break-word] hx:hover:text-primary-600 hx:dark:text-gray-300 hx:md:text-lg hx:ltr:pr-4 hx:rtl:pl-4"
+      ><svg class="hx:inline hx:h-5 hx:shrink-0 hx:ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>EIS/DRT Analysis: Mapping Frequency-Domain Impedance to a Distribution of Relaxation Times</a></div>
       </main>
     </article>
   </div>
